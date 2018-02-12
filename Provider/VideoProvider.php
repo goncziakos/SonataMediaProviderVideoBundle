@@ -250,6 +250,7 @@ class VideoProvider extends FileProvider {
         $video = $this->ffmpeg->open($source);
         $video
                 ->filters()
+                ->removeAudio()
                 ->resize(new Dimension($this->configVideoWidth, $height))
                 ->synchronize();
 
