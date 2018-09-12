@@ -20,8 +20,8 @@ services:
             - [ video/mp4 ]
             - '@sonata.media.resizer.custom'
             - '@sonata.media.metadata.proxy'
-            - '@xmon_ffmpeg.ffmpeg'
-            - '@xmon_ffmpeg.ffprobe'
+#            - '@xmon_ffmpeg.ffmpeg'
+#            - '@xmon_ffmpeg.ffprobe'
             - '@service_container'
             - '@doctrine.orm.entity_manager'
         calls:
