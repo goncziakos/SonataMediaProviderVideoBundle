@@ -65,17 +65,27 @@ class VideoProvider extends FileProvider {
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param \Doctrine\ORM\EntityManager $entityManager
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), ResizerInterface $resizer, MetadataBuilderInterface $metadata = null, FFMpeg $FFMpeg, FFProbe $FFProbe, Container $container, EntityManager $entityManager) {
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), ResizerInterface $resizer, MetadataBuilderInterface $metadata = null, Container $container, EntityManager $entityManager) {
 
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $metadata);
+
+        $this->container = $container;
 
         $this->allowedExtensions = $allowedExtensions;
         $this->allowedMimeTypes = $allowedMimeTypes;
         $this->metadata = $metadata;
         $this->resizer = $resizer;
         $this->getId3 = new GetId3;
-        $this->ffprobe = $FFProbe;
-        $this->ffmpeg = $FFMpeg;
+        $this->ffmpeg = FFMpeg::create([
+            'ffmpeg.binaries' => $this->container->getParameter('xmon_ffmpeg.binary'),
+            'ffprobe.binaries' => $this->container->getParameter('xmon_ffprobe.binary'),
+            'timeout' => $this->container->getParameter('xmon_ffmpeg.binary_timeout'),
+            'ffmpeg.threads' => $this->container->getParameter('xmon_ffmpeg.threads_count')
+        ]);
+        $this->ffprobe =  FFProbe::create([
+            'ffmpeg.binaries' => $this->container->getParameter('xmon_ffmpeg.binary'),
+            'ffprobe.binaries' => $this->container->getParameter('xmon_ffprobe.binary')
+        ]);
         $this->container = $container;
         $this->em = $entityManager;
         $this->thumbnail = $thumbnail;
