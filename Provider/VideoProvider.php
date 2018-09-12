@@ -436,14 +436,15 @@ class VideoProvider extends FileProvider {
     }
 
     private function updateConfigFrameValue($media){
-        $uniqid = $this->container->get('request')->query->get('uniqid');
-        $formData = $this->container->get('request')->request->get($uniqid);
-
-        if (!empty($formData['thumbnailCapture'])) {
-            if ($formData['thumbnailCapture'] <= round($media->getLength())) {
-                $this->configImageFrame = $formData['thumbnailCapture'];
-            }
-        }
+//        $uniqid = $this->container->get('request')->query->get('uniqid');
+//        $formData = $this->container->get('request')->request->get($uniqid);
+//
+//        if (!empty($formData['thumbnailCapture'])) {
+//            if ($formData['thumbnailCapture'] <= round($media->getLength())) {
+//                $this->configImageFrame = $formData['thumbnailCapture'];
+//            }
+//        }
+        $this->configImageFrame = 10;
     }
 
     private function setProviderMetadataAvailableVideoFormat(MediaInterface $media){
