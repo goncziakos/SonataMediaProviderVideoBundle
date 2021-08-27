@@ -32,6 +32,8 @@ use FFMpeg\Coordinate\Dimension;
 use FFMpeg\Format\Video;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use GetId3\GetId3Core as GetId3;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class VideoProvider extends FileProvider {
 
@@ -102,14 +104,14 @@ class VideoProvider extends FileProvider {
      * {@inheritdoc}
      */
     public function buildCreateForm(FormMapper $formMapper) {
-        $formMapper->add('binaryContent', 'file', array(
+        $formMapper->add('binaryContent', FileType::class, array(
             'constraints' => array(
                 new NotBlank(),
                 new NotNull(),
             )
         ));
 
-        $formMapper->add('thumbnailCapture', 'integer', array(
+        $formMapper->add('thumbnailCapture', NumberType::class, array(
             'mapped'        => false,
             'required'      => false,
             'label'         => 'Thumbnail generator (set value in seconds)',
@@ -122,7 +124,7 @@ class VideoProvider extends FileProvider {
     public function buildEditForm(FormMapper $formMapper) {
         parent::buildEditForm($formMapper);
 
-        $formMapper->add('thumbnailCapture', 'integer', array(
+        $formMapper->add('thumbnailCapture', NumberType::class, array(
             'mapped'        => false,
             'required'      => false,
             'label'         => 'Thumbnail generator (set value in seconds)',
