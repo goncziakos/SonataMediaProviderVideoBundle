@@ -89,9 +89,9 @@ class CustomResizer implements ResizerInterface {
      * @return Box
      */
     private function computeBox(MediaInterface $media, array $settings) {
-        if ($this->mode !== ImageInterface::THUMBNAIL_INSET && $this->mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
-            throw new InvalidArgumentException('Invalid mode specified');
-        }
+//         if ($this->mode !== ImageInterface::THUMBNAIL_INSET && $this->mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
+//             throw new InvalidArgumentException('Invalid mode specified');
+//         }
 
         $size = $media->getBox();
 
