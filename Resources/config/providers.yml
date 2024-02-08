@@ -20,12 +20,10 @@ services:
             - [ video/mp4 ]
             - '@sonata.media.resizer.custom'
             - '@sonata.media.metadata.proxy'
-#            - '@xmon_ffmpeg.ffmpeg'
-#            - '@xmon_ffmpeg.ffprobe'
             - '@service_container'
             - '@doctrine.orm.entity_manager'
         calls:
-            - [ setTemplates, [ { helper_thumbnail: 'XmonSonataMediaProviderVideoBundle:Provider:thumbnail.html.twig', helper_view: 'XmonSonataMediaProviderVideoBundle:Provider:video.html.twig' } ] ]
+            - [ setTemplates, [ { helper_thumbnail: '@@XmonSonataMediaProviderVideo/Provider/thumbnail.html.twig', helper_view: '@@XmonSonataMediaProviderVideo/Provider/video.html.twig' } ] ]
 
     xmon_ffmpeg.ffmpeg:
         class: '%xmon_video.ffmpeg.class%'
@@ -43,13 +41,13 @@ services:
         tags:
             - { name: leclerc.manager }
         arguments: ['@doctrine.orm.default_entity_manager', Xmon\SonataMediaProviderVideoBundle\Entity\Video]
-            
+
     # redimensiones imagenes personalizado
     sonata.media.resizer.custom:
         class: '%xmon.provider.video.resize%'
         arguments: ['@sonata.media.adapter.image.gd', 'outbound', '@sonata.media.metadata.proxy']
     # FIN redimensiones imagenes personalizado
-            
+
     # variables globales para utilizar en plantillas Twig
     twig.extension.globals_extension:
          class: Xmon\SonataMediaProviderVideoBundle\Twig\Extension\GlobalsExtension

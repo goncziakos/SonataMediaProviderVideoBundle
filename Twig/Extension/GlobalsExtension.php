@@ -8,6 +8,9 @@
 namespace Xmon\SonataMediaProviderVideoBundle\Twig\Extension;
 
 use Sonata\MediaBundle\Provider\Pool;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
+use Twig\TwigFilter;
 
 /**
  * Description of GlobalsExtension
@@ -15,72 +18,61 @@ use Sonata\MediaBundle\Provider\Pool;
  * @author Juanjo García <juanjogarcia@editartgroup.com>
  */
 
-class GlobalsExtension extends \Twig_Extension {
+class GlobalsExtension extends AbstractExtension implements GlobalsInterface {
 
-    protected $mediaService;
-    
-    public function getFilters()
+    public function getFilters(): array
     {
         return array(
-            new \Twig_SimpleFilter('video_mp4', array($this, 'videoFormatMp4')),
-            new \Twig_SimpleFilter('video_ogg', array($this, 'videoFormatOgg')),
-            new \Twig_SimpleFilter('video_webm', array($this, 'videoFormatWebm'))
+            new TwigFilter('video_mp4', array($this, 'videoFormatMp4')),
+            new TwigFilter('video_ogg', array($this, 'videoFormatOgg')),
+            new TwigFilter('video_webm', array($this, 'videoFormatWebm'))
         );
     }
 
-    /**
-     * 
-     * @param type $width
-     * @param Pool $mediaService
-     */
-    public function __construct($width, Pool $mediaService) {
-        $this->width = $width;
-        $this->mediaService = $mediaService;
+    public function __construct(protected int $width, protected Pool $mediaService) {
     }
 
-    public function videoFormatMp4($media)
+    public function videoFormatMp4($media): string
     {
         $provider = $this
             ->getMediaService()
             ->getProvider($media->getProviderName());
-        
+
         return $provider->generatePublicUrl($media, "videos_mp4");
     }
-    
-    public function videoFormatOgg($media)
+
+    public function videoFormatOgg($media): string
     {
         $provider = $this
             ->getMediaService()
             ->getProvider($media->getProviderName());
-        
+
         return $provider->generatePublicUrl($media, "videos_ogg");
     }
-    
-    public function videoFormatWebm($media)
+
+    public function videoFormatWebm($media): string
     {
         $provider = $this
             ->getMediaService()
             ->getProvider($media->getProviderName());
-        
+
         return $provider->generatePublicUrl($media, "videos_webm");
     }
 
-    public function getGlobals() {
-
+    public function getGlobals(): array
+    {
         return array(
             'width' => $this->width
         );
     }
 
-    /**
-     * @return \Sonata\MediaBundle\Provider\Pool
-     */
-    public function getMediaService()
+    public function getMediaService(): Pool
     {
         return $this->mediaService;
     }
 
-    public function getName() {
+    public function getName(): string
+    {
         return 'SonataMediaProviderVideoBundle:GlobalsExtension';
     }
 

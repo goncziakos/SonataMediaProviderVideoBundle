@@ -22,15 +22,15 @@ use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
  */
 class CustomResizer implements ResizerInterface {
 
-    protected $adapter;
-    protected $mode;
-    protected $metadata;
+    protected ImagineInterface $adapter;
+    protected string $mode;
+    protected MetadataBuilderInterface $metadata;
 
     /**
      * @param ImagineInterface $adapter
      * @param string $mode
      */
-    public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata) {
+    public function __construct(ImagineInterface $adapter, string $mode, MetadataBuilderInterface $metadata) {
         $this->adapter = $adapter;
         $this->mode = $mode;
         $this->metadata = $metadata;
@@ -39,7 +39,8 @@ class CustomResizer implements ResizerInterface {
     /**
      * {@inheritdoc}
      */
-    public function resize(MediaInterface $media, File $in, File $out, $format, array $settings) {
+    public function resize(MediaInterface $media, File $in, File $out, $format, array $settings): void
+    {
         if (!(isset($settings['width']) && $settings['width'])) {
             throw new \RuntimeException(sprintf('Width parameter is missing in context "%s" for provider "%s"', $media->getContext(), $media->getProviderName()));
         }
@@ -56,7 +57,8 @@ class CustomResizer implements ResizerInterface {
     /**
      * {@inheritdoc}
      */
-    public function getBox(MediaInterface $media, array $settings) {
+    public function getBox(MediaInterface $media, array $settings): Box
+    {
         $size = $media->getBox();
         $hasWidth = isset($settings['width']) && $settings['width'];
         $hasHeight = isset($settings['height']) && $settings['height'];

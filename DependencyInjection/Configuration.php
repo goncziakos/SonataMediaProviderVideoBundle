@@ -15,10 +15,10 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritDoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('xmon_sonata_media_provider_video');
+        $treeBuilder = new TreeBuilder('xmon_sonata_media_provider_video');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
                 ->children()

@@ -1,18 +1,24 @@
-<link href="http://vjs.zencdn.net/5.0.2/video-js.css" rel="stylesheet">
-<script src="http://vjs.zencdn.net/ie8/1.1.0/videojs-ie8.min.js"></script>
-<script src="http://vjs.zencdn.net/5.0.2/video.js"></script>  
-
 {# calculo el alto escalado del vídeo #}
 {% set height = width * media.height / media.width %}
-
-<video 
-    id="video-{{ media.id }}" 
-    class="video-js" 
-    controls 
-    preload="auto" 
-    width="{{ width }}" 
+<video
+    id="video-{{ media.id }}"
+    class="sonata-media-video"
+    {% if options.controls is defined and options.controls %}
+    controls
+    {% endif %}
+    {% if options.autoplay is defined and options.autoplay %}
+        autoplay
+    {% endif %}
+    {% if options.loop is defined and options.loop %}
+        loop
+    {% endif %}
+    {% if options.muted is defined and options.muted %}
+        muted
+    {% endif %}
+    preload="auto"
+    width="{{ width }}"
     height="{{ height }}"
-    poster="/uploads/media/{{ options.thumbnail.getKey() }}" data-setup="{}">
+    poster="/uploads/media/{{ options.thumbnail }}" data-setup="{}">
 
     {% if media.providerMetadata.mp4_available is defined %}
         <source src="{{ options.video_mp4 }}" type="video/mp4">
@@ -23,8 +29,5 @@
     {% if media.providerMetadata.webm_available is defined %}
         <source src="{{ options.video_webm }}" type="video/webm">
     {% endif %}
-    <p class="vjs-no-js">
-        To view this video please enable JavaScript, and consider upgrading to a web browser that
-        <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-    </p>
+    <p>To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video</p>
 </video>

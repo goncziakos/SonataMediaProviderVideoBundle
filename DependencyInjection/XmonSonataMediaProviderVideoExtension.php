@@ -14,10 +14,7 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class XmonSonataMediaProviderVideoExtension extends Extension
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -34,6 +31,6 @@ class XmonSonataMediaProviderVideoExtension extends Extension
         $container->setParameter('xmon_ffmpeg.mp4', $config['formats']['mp4']);
         $container->setParameter('xmon_ffmpeg.ogg', $config['formats']['ogg']);
         $container->setParameter('xmon_ffmpeg.webm', $config['formats']['webm']);
-        
+
     }
 }

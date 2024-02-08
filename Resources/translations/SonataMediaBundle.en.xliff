@@ -6,6 +6,26 @@
                 <source>sonata.media.provider.video</source>
                 <target>Video</target>
             </trans-unit>
+            <trans-unit id="sonata.media.provider.video.description">
+                <source>sonata.media.provider.video.description</source>
+                <target>Mp4 videó upload</target>
+            </trans-unit>
+            <trans-unit id="form.label_autoplay">
+                <source>form.label_autoplay</source>
+                <target>Autoplay</target>
+            </trans-unit>
+            <trans-unit id="form.label_loop">
+                <source>form.label_loop</source>
+                <target>Loop</target>
+            </trans-unit>
+            <trans-unit id="form.label_muted">
+                <source>form.label_muted</source>
+                <target>Muted</target>
+            </trans-unit>
+            <trans-unit id="form.label_controls">
+                <source>form.label_controls</source>
+                <target>Show controls</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
