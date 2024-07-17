@@ -30,7 +30,7 @@
     ],
     "require": {
         "php": ">=8.0",
-        "symfony/framework-bundle": "^5.4",
+        "symfony/framework-bundle": "^5.4 || ^6.4",
         "sonata-project/admin-bundle": "^4.28",
         "sonata-project/media-bundle": "^4.10",
         "doctrine/doctrine-bundle": "^2.7",
