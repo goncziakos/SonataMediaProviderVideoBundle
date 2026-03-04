@@ -49,7 +49,7 @@ class VideoProvider extends BaseFileProvider
     protected ThumbnailInterface $thumbnail;
 
     protected string $ext = 'jpg';
-    protected FormMapper $formMapper;
+    protected ?FormMapper $formMapper = null;
 
     public function __construct(
         string $name,
@@ -433,8 +433,10 @@ class VideoProvider extends BaseFileProvider
         }
 
         // recojo el punto de extracción de la imagen definido en la configuración
-        $secondsExtract = (int)$this->formMapper->getAdmin()->getForm()->get('thumbnailCapture')->getData()
-            ?: $this->configImageFrame;
+        $secondsExtract = (int)$this->configImageFrame;
+        if ($this->formMapper && $this->formMapper->getAdmin()->getForm()->get('thumbnailCapture')->getData()) {
+            $secondsExtract = $this->formMapper->getAdmin()->getForm()->get('thumbnailCapture')->getData();
+        }
         // conocemos la duración del vídeo
         $duration = $stream->get('duration');
 
